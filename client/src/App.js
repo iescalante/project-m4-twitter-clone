@@ -11,6 +11,8 @@ import Bookmarks from './Bookmarks';
 import TweetDetails from './TweetDetails';
 import Profile from './Profile';
 
+import GlobalStyles from './GlobalStyles';
+
 const App = () => {
   return (
     <Router>
@@ -32,6 +34,7 @@ const App = () => {
             <Profile />
           </Route>
         </Switch>
+        <GlobalStyles />
       </div>
     </Router>
   )
