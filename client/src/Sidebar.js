@@ -12,19 +12,19 @@ const Sidebar = () => {
     <Wrapper>
       <CatLogo src={catLogo}/>
       <NavigationLink exact to='/'>
-        <FiHome/>
+        <FiHome style={{verticalAlign:'middle'}}/>
         <StyledSpan>Home</StyledSpan>
       </NavigationLink>
       <NavigationLink to='/profile/me'>
-        <FiUser/>
+        <FiUser style={{verticalAlign:'middle'}}/>
         <StyledSpan>Profile</StyledSpan>
       </NavigationLink>
       <NavigationLink to='/notifications'>
-        <FiBell/>
+        <FiBell style={{verticalAlign:'middle'}}/>
         <StyledSpan>Notifications</StyledSpan>
       </NavigationLink>
       <NavigationLink to='Bookmarks'>
-        <FiBookmark/>
+        <FiBookmark style={{verticalAlign:'middle'}}/>
         <StyledSpan>Bookmarks</StyledSpan>
       </NavigationLink>
     </Wrapper>
@@ -33,13 +33,14 @@ const Sidebar = () => {
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  margin-left: 200px;
+  margin-left:120px;
   text-align: left;
   margin-top: 45px;
 `
 
 const StyledSpan = styled.span`
-  margin-left: 20px;
+  margin-left: 30px;
+  vertical-align: middle;
 `;
 
 const CatLogo = styled.img`
