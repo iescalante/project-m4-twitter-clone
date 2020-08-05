@@ -15,7 +15,7 @@ const Sidebar = () => {
         <FiHome/>
         <StyledSpan>Home</StyledSpan>
       </NavigationLink>
-      <NavigationLink to='/profile/abc'>
+      <NavigationLink to='/profile/me'>
         <FiUser/>
         <StyledSpan>Profile</StyledSpan>
       </NavigationLink>
