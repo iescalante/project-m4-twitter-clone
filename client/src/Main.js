@@ -34,7 +34,7 @@ const Main = () => {
 };
 const Wrapper = styled.div`
   display:flex;
-  margin-top: 10px;
+  padding: 10px 50px 0 40px;
 `;
 
 export default Main;

@@ -52,6 +52,7 @@ const CatLogo = styled.img`
 
 const NavigationLink = styled(NavLink)`
   text-decoration: none;
+  display:flex;
   color: black;
   font-weight: bold;
   margin: 10px 0;
