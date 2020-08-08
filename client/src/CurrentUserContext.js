@@ -7,7 +7,7 @@ export const CurrentUserProvider = ({ children }) => {
   const [status, setStatus] = React.useState('loading');
   
   React.useEffect(() => {
-    fetch('http://localhost:31415/api/me/profile')
+    fetch('/api/me/profile')
     .then(response => response.json())
     .then(data => {
         setCurrentUser(data);

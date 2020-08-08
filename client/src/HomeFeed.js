@@ -1,11 +1,18 @@
 import React from 'react';
 import { CurrentUserContext } from './CurrentUserContext';
 import styled from 'styled-components';
+import { COLORS } from './constants';
+
+import Tweet from './Tweet';
 
 const HomeFeed = () => {
   const {currentUser} = 
     React.useContext(CurrentUserContext);
-  const [feedData, setFeedData] = React.useState(null)
+  const [feedData, setFeedData] = React.useState({
+    tweetIds: [],
+    tweetsById: {},
+  });
+
   const {
         avatarSrc,
         bannerSrc,
@@ -21,7 +28,7 @@ const HomeFeed = () => {
         numLikes
       } = currentUser.profile;
     React.useEffect(() => {
-        fetch('http://localhost:31415/api/me/home-feed')
+        fetch('/api/me/home-feed')
         .then(response => response.json())
         .then(data => {
             setFeedData(data);
@@ -35,9 +42,18 @@ const HomeFeed = () => {
         <TopHomeFeed>
           <HomeHeader>Home</HomeHeader>
           <Avatar src={avatarSrc}/>
-          <TextArea></TextArea>
+          <TextArea placeholder="What's Happening?"></TextArea>
+          <MeowBtn>MEOW</MeowBtn>
         </TopHomeFeed>
-        <div>Tweets by Id</div>
+        <BottomHomeFeed>
+          {feedData.tweetIds.map((tweetId) => {
+            const tweet = feedData.tweetsById[tweetId];
+            return (
+            <Tweet tweet={tweet}/>
+            )
+          })}
+        </BottomHomeFeed>
+
       </Wrapper>
     )
 };
@@ -56,12 +72,29 @@ const TopHomeFeed = styled.div`
 const Avatar = styled.img`
   display: inline-block;
   border-radius: 50%;
-  width: 15%;
+  width: 65px;
   border: 2px solid white;
 `;
 const TextArea = styled.textarea`
   border: 1px solid grey;
   display: inline-block;
+  width: 80%;
+  padding-bottom: 45px;
+  padding-right:15px;
+  font-family: Arial, Helvetica, sans-serif;
+  border:none;
+  resize: none;
+`;
+const MeowBtn = styled.button`
+  padding: 10px 40px;
+  background-color: ${COLORS.primary};
+  color: white;
+  border-radius: 20px;
+  border:none;
+  float: right;
+`;
+const BottomHomeFeed = styled.div`
+  padding-top: 50px;
 `
 
 export default HomeFeed;

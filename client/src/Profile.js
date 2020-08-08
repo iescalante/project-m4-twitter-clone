@@ -1,6 +1,7 @@
 import React from 'react';
 import { CurrentUserContext, CurrentUserProvider } from './CurrentUserContext';
 import styled from 'styled-components';
+import format from 'date-fns/format';
 
 const Profile = () => {
   const {
@@ -31,7 +32,7 @@ const Profile = () => {
           <HandleName>@{handle}</HandleName>
           <Bio>{bio}</Bio>
           <span>{location}</span>
-          <span>Joined {joined}</span>
+          <span>Joined {format(new Date(joined), 'MMM yyyy')}</span>
           <div>
             <span>{numFollowing} Following</span>
             <span>{numFollowers} Followers</span>
