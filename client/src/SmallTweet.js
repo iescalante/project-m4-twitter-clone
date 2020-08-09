@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import format from 'date-fns/format';
 import TweetActions from './TweetActions';
 import { useHistory, useParams } from 'react-router-dom';
@@ -48,6 +48,7 @@ const Avatar = styled.img`
 `;
 const Text = styled.div`
   display:inline-block;
+  z-index: -1;
   &:hover{
     border: 1px solid grey;
   }
@@ -58,7 +59,7 @@ const DisplayName = styled.p`
   font-size: 16px;
   vertical-align: middle;
   margin: 0 10px;
-  
+  z-index: 100;
   &:hover{
     cursor: pointer;
   }

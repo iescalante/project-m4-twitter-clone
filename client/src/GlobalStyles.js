@@ -1,6 +1,6 @@
 import React from 'react';
-import styled from 'styled-components';
-import { createGlobalStyle } from 'styled-components';
+import styled from 'styled-components/macro';
+import { createGlobalStyle } from 'styled-components/macro';
 
 const GlobalStyles = createGlobalStyle`
 html, body, div, span, applet, object, iframe,

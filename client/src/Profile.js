@@ -1,6 +1,6 @@
 import React from 'react';
 import { CurrentUserContext, CurrentUserProvider } from './CurrentUserContext';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import format from 'date-fns/format';
 
 const Profile = () => {

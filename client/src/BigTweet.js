@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import format from 'date-fns/format';
 import TweetActions from './TweetActions';
 import { useHistory, useParams } from 'react-router-dom';

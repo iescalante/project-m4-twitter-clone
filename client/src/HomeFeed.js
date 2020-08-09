@@ -1,6 +1,6 @@
 import React from 'react';
 import { CurrentUserContext } from './CurrentUserContext';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { COLORS } from './constants';
 
 import SmallTweet from './SmallTweet';

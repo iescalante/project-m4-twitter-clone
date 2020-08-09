@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import catLogo from './assets/logo.svg';
 import { FiHome, FiUser, FiBell, FiBookmark } from 'react-icons/fi';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { NavLink } from 'react-router-dom';
 import { COLORS } from './constants';
 

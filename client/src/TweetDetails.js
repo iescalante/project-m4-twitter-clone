@@ -1,6 +1,6 @@
 import React from 'react';
 import BigTweet from './BigTweet';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 
 const TweetDetails = () => {
     return (
