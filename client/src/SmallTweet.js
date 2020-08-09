@@ -2,11 +2,21 @@ import React from 'react';
 import styled from 'styled-components';
 import format from 'date-fns/format';
 import TweetActions from './TweetActions';
+import { useHistory, useParams } from 'react-router-dom';
 
-const Tweet = ({tweet}) => {
+const SmallTweet = ({tweet}) => {
     console.log(tweet);
     let mediaType;
     let mediaSrc;
+    let history = useHistory();
+
+    function handleClickName() {
+      history.push('/profile/:profileId');
+    }
+
+    function handleClickTweet() {
+      history.push('/tweet/:tweetId')
+    }
 
     if (tweet.media[0]) {
         mediaType = tweet.media[0].type;
@@ -14,10 +24,10 @@ const Tweet = ({tweet}) => {
       }
 
     return (
-      <Wrapper>
+      <Wrapper onClick={(ev)=> console.log(ev.target)}>
         <Avatar src={tweet.author.avatarSrc}/>
-        <Text>
-          <DisplayName>{tweet.author.displayName}</DisplayName>
+        <Text onClick={handleClickTweet} tabIndex='0'>
+          <DisplayName onClick={handleClickName}>{tweet.author.displayName}</DisplayName>
           <Handle>@{tweet.author.handle}</Handle>
           <Timestamp>{format(new Date(tweet.timestamp), 'MMM dd')}</Timestamp>
           <Status>{tweet.status}</Status>
@@ -38,6 +48,9 @@ const Avatar = styled.img`
 `;
 const Text = styled.div`
   display:inline-block;
+  &:hover{
+    border: 1px solid grey;
+  }
 `
 const DisplayName = styled.p`
   display: inline-block;
@@ -45,6 +58,10 @@ const DisplayName = styled.p`
   font-size: 16px;
   vertical-align: middle;
   margin: 0 10px;
+  
+  &:hover{
+    cursor: pointer;
+  }
 `;
 const Handle = styled.p`
   display: inline-block;
@@ -71,4 +88,4 @@ const MediaImg = styled.img`
   border-radius: 10px;
   height: 400px;
 `;
-export default Tweet;
+export default SmallTweet;

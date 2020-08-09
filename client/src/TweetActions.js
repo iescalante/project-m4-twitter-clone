@@ -8,12 +8,15 @@ import {
  } from 'react-icons/fi';
 
 const TweetActions = () => {
+  function handleClick(ev) {
+    console.log(ev.target);
+  }
   return (
       <Wrapper>
-        <FiMessageSquare/>
-        <FiRepeat/>
-        <FiHeart/>
-        <FiUpload/>
+        <FiMessageSquare onClick={handleClick}/>
+        <FiRepeat onClick={handleClick}/>
+        <FiHeart onClick={handleClick}/>
+        <FiUpload onClick={handleClick}/>
       </Wrapper>
   )
 
@@ -21,7 +24,11 @@ const TweetActions = () => {
 const Wrapper = styled.div`
   display: flex;
   justify-content: space-evenly;
-  padding: 10px 0;
+  padding: 20px 0;
+  &:hover{
+    cursor: pointer;
+  }
 `;
+
 
 export default TweetActions;

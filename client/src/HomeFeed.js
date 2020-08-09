@@ -3,7 +3,7 @@ import { CurrentUserContext } from './CurrentUserContext';
 import styled from 'styled-components';
 import { COLORS } from './constants';
 
-import Tweet from './Tweet';
+import SmallTweet from './SmallTweet';
 
 const HomeFeed = () => {
   const {currentUser} = 
@@ -49,7 +49,7 @@ const HomeFeed = () => {
           {feedData.tweetIds.map((tweetId) => {
             const tweet = feedData.tweetsById[tweetId];
             return (
-            <Tweet tweet={tweet}/>
+            <SmallTweet tweet={tweet}/>
             )
           })}
         </BottomHomeFeed>
