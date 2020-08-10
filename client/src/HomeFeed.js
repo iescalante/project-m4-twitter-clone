@@ -2,6 +2,7 @@ import React from 'react';
 import { CurrentUserContext } from './CurrentUserContext';
 import styled from 'styled-components/macro';
 import { COLORS } from './constants';
+import Error from './Error';
 
 import SmallTweet from './SmallTweet';
 
@@ -27,23 +28,37 @@ const HomeFeed = () => {
         numFollowing,
         numLikes
       } = currentUser.profile;
-    React.useEffect(() => {
-        fetch('/api/me/home-feed')
-        .then(response => response.json())
-        .then(data => {
-            setFeedData(data);
-        })
-        .catch(err => console.log('this is your error', err))
-      }, [])
+
+  function handleMeowBtn(ev) {
+    ev.preventDefault();
+
+  }
+
+  React.useEffect(() => {
+    fetch('/api/me/home-feed')
+    .then(response => response.json())
+    .then(data => {
+      setFeedData(data);
+    })
+    .catch(err => {
+      console.log('this is your error',err);
+      return (
+        <Error/>
+      )
+    }
+    )
+  }, [])
       console.log('this is your homefeed', feedData);
 
     return (
       <Wrapper>
         <TopHomeFeed>
-          <HomeHeader>Home</HomeHeader>
-          <Avatar src={avatarSrc}/>
-          <TextArea placeholder="What's Happening?"></TextArea>
-          <MeowBtn>MEOW</MeowBtn>
+          <Header>Home</Header>
+          <AvInpDiv>
+            <Avatar src={avatarSrc}/>
+            <TextArea placeholder="What's Happening?"></TextArea>
+          </AvInpDiv>
+          <MeowBtn onClick={handleMeowBtn}>MEOW</MeowBtn>
         </TopHomeFeed>
         <BottomHomeFeed>
           {feedData.tweetIds.map((tweetId) => {
@@ -60,22 +75,26 @@ const HomeFeed = () => {
 const Wrapper = styled.div`
   margin: 10px 50px 10px 20px;
 `
-const HomeHeader = styled.h1`
+const Header = styled.h1`
   font-size: 24px;
   font-weight: bold;
   margin-left: 10px;
   margin-bottom: 20px;
+  z-index: 100;
 `;
-const TopHomeFeed = styled.div`
+const TopHomeFeed = styled.form`
   max-width: 100%;
 `;
+const AvInpDiv = styled.div`
+  display:flex;
+`
 const Avatar = styled.img`
   display: inline-block;
   border-radius: 50%;
   width: 65px;
   border: 2px solid white;
 `;
-const TextArea = styled.textarea`
+const TextArea = styled.input`
   border: 1px solid grey;
   display: inline-block;
   width: 80%;
@@ -91,7 +110,8 @@ const MeowBtn = styled.button`
   color: white;
   border-radius: 20px;
   border:none;
-  float: right;
+  margin-left: 76%;
+  cursor: pointer;
 `;
 const BottomHomeFeed = styled.div`
   padding-top: 50px;

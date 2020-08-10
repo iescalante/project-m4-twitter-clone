@@ -27,6 +27,7 @@ const Sidebar = () => {
         <FiBookmark style={{verticalAlign:'middle'}}/>
         <StyledSpan>Bookmarks</StyledSpan>
       </NavigationLink>
+      <MeowBtn>MEOW</MeowBtn>
     </Wrapper>
   )
 };
@@ -36,6 +37,8 @@ const Wrapper = styled.div`
   margin-left:120px;
   text-align: left;
   margin-top: 45px;
+  border-right: 1px solid lightslategrey;
+  padding-right:10px;
 `
 
 const StyledSpan = styled.span`
@@ -62,5 +65,13 @@ const NavigationLink = styled(NavLink)`
   &.active {
     color: ${COLORS.primary};
   }
-`
+`;
+const MeowBtn = styled.button`
+  padding: 10px 40px;
+  background-color: ${COLORS.primary};
+  color: white;
+  border-radius: 20px;
+  border:none;
+  cursor: pointer;
+`;
 export default Sidebar;

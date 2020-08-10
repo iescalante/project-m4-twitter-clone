@@ -33,6 +33,8 @@ const App = () => {
 
 const Wrapper = styled.div`
   display:flex;
+  margin-left:auto;
+  margin-right:auto;
 `;
 const Loading = styled.div`
   display:flex;
