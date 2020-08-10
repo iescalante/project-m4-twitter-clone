@@ -25,7 +25,7 @@ const SmallTweet = ({tweet}) => {
 
     return (
       <Wrapper onClick={(ev)=> console.log(ev.target)}>
-        <Avatar src={tweet.author.avatarSrc}/>
+        <Avatar src={tweet.author.avatarSrc}/>  
         <Text onClick={handleClickTweet} tabIndex='0'>
           <DisplayName onClick={handleClickName}>{tweet.author.displayName}</DisplayName>
           <Handle>@{tweet.author.handle}</Handle>
@@ -33,22 +33,25 @@ const SmallTweet = ({tweet}) => {
           <Status>{tweet.status}</Status>
         </Text>
         {mediaType === 'img' && <MediaImg src={mediaSrc}/>}
-        <TweetActions/>        
+        <StyledDiv>
+        <TweetActions/> 
+        </StyledDiv>       
       </Wrapper>
     
     )
 };
 const Wrapper = styled.div`
-  display:block;
-`
+  display:flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  padding: 10px 0;
+  border-bottom: 1px solid lightgrey;
+`;
 const Avatar = styled.img`
   border-radius: 50%;
   width: 65px;
-  vertical-align: middle;
 `;
 const Text = styled.div`
-  display:inline-block;
-  z-index: -1;
   &:hover{
     border: 1px solid grey;
   }
@@ -84,9 +87,15 @@ const Status = styled.p`
   margin-left: 10px;
 `
 const MediaImg = styled.img`
-  width: 85%;
-  margin-left:65px;
+  width: 100%;
+  margin-left:auto;
   border-radius: 10px;
   height: 400px;
 `;
+const StyledDiv = styled.div`
+  display: inline-block;
+  flex: auto;
+  align-items: center;
+  justify-content: space-evenly;
+`
 export default SmallTweet;

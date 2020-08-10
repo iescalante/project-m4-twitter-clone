@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { 
     FiMessageSquare,
     FiRepeat,
@@ -23,6 +23,8 @@ const TweetActions = () => {
 };
 const Wrapper = styled.div`
   display: flex;
+  flex: auto;
+  align-items: center;
   justify-content: space-evenly;
   padding: 20px 0;
   &:hover{

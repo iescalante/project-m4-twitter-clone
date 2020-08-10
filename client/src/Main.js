@@ -33,6 +33,7 @@ const Main = () => {
 };
 const Wrapper = styled.div`
   display:flex;
+  width: 50%;
   padding: 10px 50px 0 40px;
 `;
 

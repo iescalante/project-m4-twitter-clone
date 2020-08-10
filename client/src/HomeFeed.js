@@ -73,17 +73,18 @@ const HomeFeed = () => {
     )
 };
 const Wrapper = styled.div`
-  margin: 10px 50px 10px 20px;
+  border:none;
 `
 const Header = styled.h1`
   font-size: 24px;
   font-weight: bold;
-  margin-left: 10px;
   margin-bottom: 20px;
   z-index: 100;
 `;
 const TopHomeFeed = styled.form`
-  max-width: 100%;
+  width: 100%;
+  border-bottom: 1px solid lightslategray;
+  padding-bottom: 20px;
 `;
 const AvInpDiv = styled.div`
   display:flex;
@@ -114,7 +115,7 @@ const MeowBtn = styled.button`
   cursor: pointer;
 `;
 const BottomHomeFeed = styled.div`
-  padding-top: 50px;
+  padding-top: 20px;
 `
 
 export default HomeFeed;
