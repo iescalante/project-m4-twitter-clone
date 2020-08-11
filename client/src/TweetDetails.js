@@ -1,11 +1,14 @@
 import React from 'react';
 import BigTweet from './BigTweet';
 import styled from 'styled-components/macro';
+import { useParams } from 'react-router-dom';
 
 const TweetDetails = () => {
+  const { tweetId} = useParams();
+  console.log(tweetId);
     return (
         <Wrapper>
-          <BigTweet/>
+          <BigTweet tweetId={tweetId}/>
         </Wrapper>
     )
     

@@ -5,19 +5,48 @@ import TweetActions from './TweetActions';
 import { useHistory, useParams } from 'react-router-dom';
 import { FiArrowLeft } from 'react-icons/fi';
 
-const BigTweet = () => {
+const BigTweet = ({tweetId}) => {
+  console.log(tweetId);
+  const [tweetInfo, setTweetInfo] = React.useState({
+    tweet:{
+      author:{},
+      media:[],
+    }
+  });
+  let mediaType;
+  let mediaSrc;
 
+  React.useEffect(() => {
+    fetch(`/api/tweet/${tweetId}`)
+    .then(response => response.json())
+    .then(data => {
+      setTweetInfo(data);
+    })
+    .catch(err => console.log('this is your error', err))
+  }, [])
+
+  if (tweetInfo.tweet.media[0]) {
+    mediaType = tweetInfo.tweet.media[0].type;
+    mediaSrc = tweetInfo.tweet.media[0].url;
+  }
+
+    console.log(tweetInfo.tweet.timestamp);
     return (
       <Wrapper>
         <StyledFiArrowLeft onClick={(ev) =>window.location.replace('/')}/>
-        Meow
-        <Avatar/>
-        <Text tabIndex='0'>
-          <DisplayName>Hello</DisplayName>
-          <Handle>@Hello</Handle>
-          <Timestamp>Today's date</Timestamp>
-          <Status>This is a test for Big Tweet</Status>
-        </Text>
+        <Header>Meow</Header>
+        <TweetDiv>
+          <TopPart>
+            <Avatar src={tweetInfo.tweet.author.avatarSrc}/>
+            <UserInfo>
+              <DisplayName>{tweetInfo.tweet.author.displayName}</DisplayName>
+              <Handle>@{tweetInfo.tweet.author.handle}</Handle>
+            </UserInfo>
+          </TopPart>
+          <Status>{tweetInfo.tweet.status}</Status>
+          {mediaType === 'img' && <MediaImg src={mediaSrc}/>}
+          <Timestamp>{tweetInfo.tweet.timestamp} - Critter web app</Timestamp>
+        </TweetDiv>
         <TweetActions/>        
       </Wrapper>
     
@@ -25,12 +54,33 @@ const BigTweet = () => {
 };
 const Wrapper = styled.div`
   display:block;
-`
+`;
+const Header = styled.h1`
+  display:inline-block;
+  font-size: 20px;
+  padding-left: 10px;
+  vertical-align: middle;
+  font-weight:900;
+`;
+
+const TweetDiv = styled.div`
+  margin-top: 40px;
+`;
+
+const TopPart = styled.div`
+  display:flex;
+`;
 const Avatar = styled.img`
   border-radius: 50%;
   width: 65px;
   vertical-align: middle;
 `;
+
+const UserInfo = styled.div`
+  display:flex;
+  flex-direction:column;
+  margin-left:15px;
+`
 const Text = styled.div`
   display:inline-block;
   &:hover{
@@ -41,18 +91,15 @@ const DisplayName = styled.p`
   display: inline-block;
   font-weight: bold;
   font-size: 16px;
-  vertical-align: middle;
-  margin: 0 10px;
   
   &:hover{
     cursor: pointer;
   }
 `;
 const Handle = styled.p`
-  display: inline-block;
+  display: block;
   font-weight: bold;
   font-size: 16px;
-  vertical-align: middle;
   color: #616161;
 `;
 const Timestamp = styled.p`
@@ -65,15 +112,17 @@ const Timestamp = styled.p`
 `;
 const Status = styled.p`
   display: block;
-  margin-left: 10px;
-`
+  margin: 20px 0;
+  font-size: 24px;
+`;
 const MediaImg = styled.img`
-  width: 85%;
-  margin-left:65px;
-  border-radius: 10px;
-  height: 400px;
+  margin: 10px 0;
+  width: 100%;
+  border-radius: 15px;
 `;
 const StyledFiArrowLeft = styled(FiArrowLeft)`
+  font-size: 20px;
+  vertical-align: middle;
   &:hover{
       cursor: pointer;
   }

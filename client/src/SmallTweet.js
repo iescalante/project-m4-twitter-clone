@@ -10,13 +10,17 @@ const SmallTweet = ({tweet}) => {
     let mediaSrc;
     let history = useHistory();
 
-    function handleClickName() {
-      history.push('/profile/:profileId');
+    function handleClickTweet(e, tweetId) {
+      history.push(`/tweet/${tweetId}`)
+    }
+    
+    function handleClickName(e, handle) {
+      e.stopPropagation(); // stop from bubbling up to click tweet
+      history.push(`/profile/${handle}`);
+    
     }
 
-    function handleClickTweet() {
-      history.push('/tweet/:tweetId')
-    }
+    
 
     if (tweet.media[0]) {
         mediaType = tweet.media[0].type;
@@ -24,10 +28,10 @@ const SmallTweet = ({tweet}) => {
       }
 
     return (
-      <Wrapper onClick={(ev)=> console.log(ev.target)}>
+      <Wrapper onClick={(e)=> handleClickTweet(e,tweet.id)}>
         <Avatar src={tweet.author.avatarSrc}/>  
-        <Text onClick={handleClickTweet} tabIndex='0'>
-          <DisplayName onClick={handleClickName}>{tweet.author.displayName}</DisplayName>
+        <Text tabIndex='0'>
+          <DisplayName onClick={(e) => handleClickName(e, tweet.author.handle)}>{tweet.author.displayName}</DisplayName>
           <Handle>@{tweet.author.handle}</Handle>
           <Timestamp>{format(new Date(tweet.timestamp), 'MMM dd')}</Timestamp>
           <Status>{tweet.status}</Status>
@@ -46,15 +50,16 @@ const Wrapper = styled.div`
   flex-wrap: wrap;
   padding: 10px 0;
   border-bottom: 1px solid lightgrey;
+  &:hover{
+    border: 1px solid gray;
+  }
 `;
 const Avatar = styled.img`
   border-radius: 50%;
   width: 65px;
 `;
 const Text = styled.div`
-  &:hover{
-    border: 1px solid grey;
-  }
+  display:block;
 `
 const DisplayName = styled.p`
   display: inline-block;

@@ -29,11 +29,10 @@ const HomeFeed = () => {
         numLikes
       } = currentUser.profile;
 
-  function handleMeowBtn(ev) {
-    ev.preventDefault();
-
+  const sendMeow = (e) => {
+    e.preventDefault();
+    console.log(e.target);
   }
-
   React.useEffect(() => {
     fetch('/api/me/home-feed')
     .then(response => response.json())
@@ -52,14 +51,14 @@ const HomeFeed = () => {
 
     return (
       <Wrapper>
-        <TopHomeFeed>
+        <TopHomeForm>
           <Header>Home</Header>
           <AvInpDiv>
             <Avatar src={avatarSrc}/>
             <TextArea placeholder="What's Happening?"></TextArea>
           </AvInpDiv>
-          <MeowBtn onClick={handleMeowBtn}>MEOW</MeowBtn>
-        </TopHomeFeed>
+          <MeowBtn type='submit' onClick={sendMeow}>MEOW</MeowBtn>
+        </TopHomeForm>
         <BottomHomeFeed>
           {feedData.tweetIds.map((tweetId) => {
             const tweet = feedData.tweetsById[tweetId];
@@ -81,7 +80,7 @@ const Header = styled.h1`
   margin-bottom: 20px;
   z-index: 100;
 `;
-const TopHomeFeed = styled.form`
+const TopHomeForm = styled.form`
   width: 100%;
   border-bottom: 1px solid lightslategray;
   padding-bottom: 20px;
