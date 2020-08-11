@@ -9,38 +9,54 @@ const Profile = () => {
   const {
     currentUser,
     status,
-    viewPage
+    setStatus
   } = React.useContext(CurrentUserContext);
-  console.log(viewPage);
+  const [otherProfile, setOtherProfile] = React.useState(null);
+  const [otherProfileStatus, setOtherProfileStatus] = React.useState('loading');
+  const { profileId } = useParams();
   
-  const {
-    avatarSrc,
-    bannerSrc,
-    bio,
-    displayName,
-    handle,
-    isBeingFollowedByYou,
-    isFollowingYou,
-    joined,
-    location,
-    numFollowers,
-    numFollowing,
-    numLikes
-  } = currentUser.profile;
-  console.log(handle);
+  // const {
+  //   avatarSrc,
+  //   bannerSrc,
+  //   bio,
+  //   displayName,
+  //   handle,
+  //   isBeingFollowedByYou,
+  //   isFollowingYou,
+  //   joined,
+  //   location,
+  //   numFollowers,
+  //   numFollowing,
+  //   numLikes
+  // } = otherProfile.profile;
+
+  React.useEffect(()=> {
+    if (profileId !== 'me') {
+      fetch(`/api/${profileId}/profile`)
+      .then(response => response.json())
+      .then(data => {
+          setOtherProfile(data);
+          setOtherProfileStatus('idle');
+      })
+      .catch(err => console.log('this is your error', err))
+    }
+  }, [])
+  console.log(profileId, otherProfile);
+
   return (
-      <Wrapper>
-        <Banner src={bannerSrc}/>
+    <>
+    {otherProfile ? (<> <Wrapper>
+        <Banner src={otherProfile.profile.bannerSrc}/>
         <UserInfo>
-          <Avatar src={avatarSrc}/>
-          <DisplayName>{displayName}</DisplayName>
-          <HandleName>@{handle}</HandleName>
-          <Bio>{bio}</Bio>
-          <Location>{location}</Location>
-          <DateJoined>Joined {format(new Date(joined), 'MMM yyyy')}</DateJoined>
+          <Avatar src={otherProfile.profile.avatarSrc}/>
+          <DisplayName>{otherProfile.profile.displayName}</DisplayName>
+          <HandleName>@{otherProfile.profile.handle}</HandleName>
+          <Bio>{otherProfile.profile.bio}</Bio>
+          <Location>{otherProfile.profile.location}</Location>
+          <DateJoined>Joined {format(new Date(otherProfile.profile.joined), 'MMM yyyy')}</DateJoined>
           <FollowData>
-            <span>{numFollowing} Following</span>
-            <span>{numFollowers} Followers</span>
+            <span>{otherProfile.profile.numFollowing} Following</span>
+            <span>{otherProfile.profile.numFollowers} Followers</span>
           </FollowData>
         </UserInfo>
         <TweetFeedList>
@@ -48,7 +64,8 @@ const Profile = () => {
           <Option>Media</Option>
           <Option>Likes</Option>
         </TweetFeedList>
-      </Wrapper>
+      </Wrapper></>) : (<>Loading</>)}    
+    </> 
   )
 };
 

@@ -5,9 +5,12 @@ import { FiHome, FiUser, FiBell, FiBookmark } from 'react-icons/fi';
 import styled from 'styled-components/macro';
 import { NavLink } from 'react-router-dom';
 import { COLORS } from './constants';
+import { CurrentUserContext } from './CurrentUserContext';
 
 
 const Sidebar = () => {
+  const { currentUser } = React.useContext(CurrentUserContext);
+
   return (
     <Wrapper>
       <CatLogo src={catLogo}/>
@@ -15,7 +18,7 @@ const Sidebar = () => {
         <FiHome style={{verticalAlign:'middle'}}/>
         <StyledSpan>Home</StyledSpan>
       </NavigationLink>
-      <NavigationLink to='/profile/me'>
+      <NavigationLink to={`/profile/${currentUser.profile.handle}`}>
         <FiUser style={{verticalAlign:'middle'}}/>
         <StyledSpan>Profile</StyledSpan>
       </NavigationLink>
