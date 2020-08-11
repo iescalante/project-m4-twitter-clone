@@ -77,7 +77,8 @@ const Wrapper = styled.div`
 `;
 
 const Banner = styled.img`
-  max-width: 100%;
+  width: 100%;
+  height: 300px;
 `;
 const UserInfo = styled.div`
   position: relative;
