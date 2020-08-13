@@ -5,7 +5,7 @@ import TweetActions from './TweetActions';
 import { useHistory, useParams } from 'react-router-dom';
 
 const SmallTweet = ({tweet}) => {
-    console.log(tweet);
+    // console.log(tweet);
     let mediaType;
     let mediaSrc;
     let history = useHistory();

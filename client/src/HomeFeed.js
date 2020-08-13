@@ -1,79 +1,106 @@
-import React from 'react';
-import { CurrentUserContext } from './CurrentUserContext';
-import styled from 'styled-components/macro';
-import { COLORS } from './constants';
-import Error from './Error';
+import React from "react";
+import { CurrentUserContext } from "./CurrentUserContext";
+import styled from "styled-components/macro";
+import { COLORS } from "./constants";
+import Error from "./Error";
 
-import SmallTweet from './SmallTweet';
+import SmallTweet from "./SmallTweet";
 
 const HomeFeed = () => {
-  const {currentUser} = 
-    React.useContext(CurrentUserContext);
+  const { currentUser } = React.useContext(CurrentUserContext);
   const [feedData, setFeedData] = React.useState({
     tweetIds: [],
     tweetsById: {},
   });
 
+  const [status, setStatus] = React.useState("");
+
   const {
-        avatarSrc,
-        bannerSrc,
-        bio,
-        displayName,
-        handle,
-        isBeingFollowedByYou,
-        isFollowingYou,
-        joined,
-        location,
-        numFollowers,
-        numFollowing,
-        numLikes
-      } = currentUser.profile;
+    avatarSrc,
+    bannerSrc,
+    bio,
+    displayName,
+    handle,
+    isBeingFollowedByYou,
+    isFollowingYou,
+    joined,
+    location,
+    numFollowers,
+    numFollowing,
+    numLikes,
+  } = currentUser.profile;
+
+  React.useEffect(() => {
+    fetch("/api/me/home-feed")
+      .then((response) => response.json())
+      .then((data) => {
+        setFeedData(data);
+      })
+      .catch((err) => {
+        console.log("this is your error", err);
+        return <Error />;
+      });
+  }, []);
 
   const sendMeow = (e) => {
     e.preventDefault();
-    console.log(e.target);
-  }
-  React.useEffect(() => {
-    fetch('/api/me/home-feed')
-    .then(response => response.json())
-    .then(data => {
-      setFeedData(data);
+
+    fetch("/api/tweet", {
+      method: "POST",
+      body: JSON.stringify({ status }),
+      headers: {
+        "Content-Type": "application/json",
+      },
     })
-    .catch(err => {
-      console.log('this is your error',err);
-      return (
-        <Error/>
-      )
-    }
-    )
-  }, [])
-      console.log('this is your homefeed', feedData);
+      .then((res) => res.json())
+      .then((data) => {
+        // add the tweet id to tweetIds
+        // add the tweet to tweetsById
+        console.log("data", data.tweet);
+        setTimeout(
+          fetch("/api/me/home-feed")
+            .then((response) => response.json())
+            .then((data) => {
+              setFeedData(data);
+            }),
+          100
+        );
+        setStatus("");
+      });
+  };
 
-    return (
-      <Wrapper>
-        <TopHomeForm>
-          <Header>Home</Header>
-          <AvInpDiv>
-            <Avatar src={avatarSrc}/>
-            <TextArea placeholder="What's Happening?"></TextArea>
-          </AvInpDiv>
-          <MeowBtn type='submit' onClick={sendMeow}>MEOW</MeowBtn>
-        </TopHomeForm>
-        <BottomHomeFeed>
-          {feedData.tweetIds.map((tweetId) => {
-            const tweet = feedData.tweetsById[tweetId];
-            return (
-            <SmallTweet tweet={tweet}/>
-            )
-          })}
-        </BottomHomeFeed>
+  const handleChange = (ev) => setStatus(ev.target.value);
 
-      </Wrapper>
-    )
+  console.log("this is your homefeed", feedData);
+
+  return (
+    <Wrapper>
+      <TopHomeForm onSubmit={sendMeow}>
+        <Header>Home</Header>
+        <AvInpDiv>
+          <Avatar src={avatarSrc} />
+          <TextInput
+            value={status}
+            onChange={(ev) => handleChange(ev)}
+            name="status"
+            placeholder="What's Happening?"
+            type="text"
+          />
+        </AvInpDiv>
+        <MeowBtn type="submit">MEOW</MeowBtn>
+      </TopHomeForm>
+      <BottomHomeFeed>
+        {feedData.tweetIds.map((tweetId) => {
+          const tweet = feedData.tweetsById[tweetId];
+          return <SmallTweet key={tweet.id} tweet={tweet} />;
+        })}
+      </BottomHomeFeed>
+    </Wrapper>
+  );
 };
 const Wrapper = styled.div`
-  border:none;
-`
+  border: none;
+`;
 const Header = styled.h1`
   font-size: 24px;
   font-weight: bold;
@@ -86,22 +113,22 @@ const TopHomeForm = styled.form`
   padding-bottom: 20px;
 `;
 const AvInpDiv = styled.div`
-  display:flex;
-`
+  display: flex;
+`;
 const Avatar = styled.img`
   display: inline-block;
   border-radius: 50%;
   width: 65px;
   border: 2px solid white;
 `;
-const TextArea = styled.input`
+const TextInput = styled.input`
   border: 1px solid grey;
   display: inline-block;
   width: 80%;
   padding-bottom: 45px;
-  padding-right:15px;
+  padding-right: 15px;
   font-family: Arial, Helvetica, sans-serif;
-  border:none;
+  border: none;
   resize: none;
 `;
 const MeowBtn = styled.button`
@@ -109,12 +136,12 @@ const MeowBtn = styled.button`
   background-color: ${COLORS.primary};
   color: white;
   border-radius: 20px;
-  border:none;
+  border: none;
   margin-left: 76%;
   cursor: pointer;
 `;
 const BottomHomeFeed = styled.div`
   padding-top: 20px;
-`
+`;
 
 export default HomeFeed;

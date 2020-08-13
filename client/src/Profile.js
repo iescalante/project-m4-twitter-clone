@@ -6,11 +6,11 @@ import { COLORS } from './constants';
 import { useParams } from 'react-router-dom';
 
 const Profile = () => {
-  const {
-    currentUser,
-    status,
-    setStatus
-  } = React.useContext(CurrentUserContext);
+  // const {
+  //   currentUser,
+  //   status,
+  //   setStatus
+  // } = React.useContext(CurrentUserContext);
   const [otherProfile, setOtherProfile] = React.useState(null);
   const [otherProfileStatus, setOtherProfileStatus] = React.useState('loading');
   const { profileId } = useParams();
@@ -55,8 +55,14 @@ const Profile = () => {
           <Location>{otherProfile.profile.location}</Location>
           <DateJoined>Joined {format(new Date(otherProfile.profile.joined), 'MMM yyyy')}</DateJoined>
           <FollowData>
-            <span>{otherProfile.profile.numFollowing} Following</span>
-            <span>{otherProfile.profile.numFollowers} Followers</span>
+            <Following>
+              <NumFollow>{otherProfile.profile.numFollowing}</NumFollow> 
+              Following
+            </Following>
+            <Followers>
+              <NumFollow>{otherProfile.profile.numFollowers}</NumFollow> 
+              Followers
+            </Followers>
           </FollowData>
         </UserInfo>
         <TweetFeedList>
@@ -111,9 +117,7 @@ const DateJoined = styled.span`
   display:inline-block;
   padding: 10px 20px;
 `;
-const FollowData = styled.div`
-  display:flex;
-`
+
 const TweetFeedList = styled.div`
   display:flex;
   align-items: center;
@@ -131,5 +135,25 @@ const Option = styled.h2`
     border-bottom: 3px solid ${COLORS.primary};
     cursor: pointer;
   }
-`
+`;
+const FollowData = styled.div`
+  display: block;
+  color: grey;
+`;
+const Following = styled.span`
+  padding: 5px 10px 5px 0;
+`;
+
+const NumFollow = styled.span`
+  font-weight: 800;
+  color: black;
+  padding: 0 5px 0 0;
+`;
+
+const Followers = styled.span`
+  padding: 5px 10px;
+`;
+
+const NumFollowers = styled.span
+
 export default Profile;
