@@ -30,6 +30,9 @@ const HomeFeed = () => {
     numLikes,
   } = currentUser.profile;
 
+  const [toggleFetch, setToggleFetch] = React.useState(false);
+
+  //Render every single Tweet info
   React.useEffect(() => {
     fetch("/api/me/home-feed")
       .then((response) => response.json())
@@ -40,8 +43,9 @@ const HomeFeed = () => {
         console.log("this is your error", err);
         return <Error />;
       });
-  }, []);
+  }, [toggleFetch]);
 
+  //Posting new tweets
   const sendMeow = (e) => {
     e.preventDefault();
 
@@ -92,7 +96,14 @@ const HomeFeed = () => {
       <BottomHomeFeed>
         {feedData.tweetIds.map((tweetId) => {
           const tweet = feedData.tweetsById[tweetId];
-          return <SmallTweet key={tweet.id} tweet={tweet} />;
+          return (
+            <SmallTweet
+              key={tweet.id}
+              tweet={tweet}
+              toggleFetch={toggleFetch}
+              setToggleFetch={setToggleFetch}
+            />
+          );
         })}
       </BottomHomeFeed>
     </Wrapper>

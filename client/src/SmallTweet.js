@@ -1,66 +1,71 @@
-import React from 'react';
-import styled from 'styled-components/macro';
-import format from 'date-fns/format';
-import TweetActions from './TweetActions';
-import { useHistory, useParams } from 'react-router-dom';
+import React from "react";
+import styled from "styled-components/macro";
+import format from "date-fns/format";
+import SmallTweetActions from "./SmallTweetActions";
+import { useHistory, useParams } from "react-router-dom";
 
-const SmallTweet = ({tweet}) => {
-    // console.log(tweet);
-    let mediaType;
-    let mediaSrc;
-    let history = useHistory();
+const SmallTweet = ({ tweet, toggleFetch, setToggleFetch }) => {
+  let mediaType;
+  let mediaSrc;
+  let history = useHistory();
 
-    function handleClickTweet(e, tweetId) {
-      history.push(`/tweet/${tweetId}`)
-    }
-    
-    function handleClickName(e, handle) {
-      e.stopPropagation(); // stop from bubbling up to click tweet
-      history.push(`/profile/${handle}`);
-    
-    }
+  function handleClickTweet(e, tweetId) {
+    history.push(`/tweet/${tweetId}`);
+  }
 
-    
+  function handleClickName(e, handle) {
+    e.stopPropagation(); // stop from bubbling up to click tweet
+    history.push(`/profile/${handle}`);
+  }
 
-    if (tweet.media[0]) {
-        mediaType = tweet.media[0].type;
-        mediaSrc = tweet.media[0].url;
-      }
+  if (tweet.media[0]) {
+    mediaType = tweet.media[0].type;
+    mediaSrc = tweet.media[0].url;
+  }
 
-    return (
-      <Wrapper onClick={(e)=> handleClickTweet(e,tweet.id)}>
-        <Avatar src={tweet.author.avatarSrc}/>  
-        <Text tabIndex='0'>
-          <DisplayName onClick={(e) => handleClickName(e, tweet.author.handle)}>{tweet.author.displayName}</DisplayName>
-          <Handle>@{tweet.author.handle}</Handle>
-          <Timestamp>{format(new Date(tweet.timestamp), 'MMM dd')}</Timestamp>
-          <Status>{tweet.status}</Status>
-        </Text>
-        {mediaType === 'img' && <MediaImg src={mediaSrc}/>}
-        <StyledDiv>
-        <TweetActions/> 
-        </StyledDiv>       
-      </Wrapper>
-    
-    )
+  return (
+    <Wrapper>
+      <Avatar src={tweet.author.avatarSrc} />
+      <Text tabIndex="0" onClick={(e) => handleClickTweet(e, tweet.id)}>
+        <DisplayName onClick={(e) => handleClickName(e, tweet.author.handle)}>
+          {tweet.author.displayName}
+        </DisplayName>
+        <Handle>@{tweet.author.handle}</Handle>
+        <Timestamp>{format(new Date(tweet.timestamp), "MMM dd")}</Timestamp>
+        <Status>{tweet.status}</Status>
+      </Text>
+      {mediaType === "img" && <MediaImg src={mediaSrc} />}
+      <StyledDiv>
+        <SmallTweetActions
+          tweet={tweet}
+          toggleFetch={toggleFetch}
+          setToggleFetch={setToggleFetch}
+          isLiked={tweet.isLiked}
+          isRetweeted={tweet.isRetweeted}
+          numLikes={tweet.numLikes}
+          numRetweets={tweet.numRetweets}
+        />
+      </StyledDiv>
+    </Wrapper>
+  );
 };
 const Wrapper = styled.div`
-  display:flex;
+  display: flex;
   align-items: flex-start;
   flex-wrap: wrap;
   padding: 10px 0;
   border-bottom: 1px solid lightgrey;
-  &:hover{
-    border: 1px solid gray;
-  }
 `;
 const Avatar = styled.img`
   border-radius: 50%;
   width: 65px;
 `;
 const Text = styled.div`
-  display:block;
-`
+  display: block;
+  &:hover {
+    border: 1px solid gray;
+  }
+`;
 const DisplayName = styled.p`
   display: inline-block;
   font-weight: bold;
@@ -68,7 +73,7 @@ const DisplayName = styled.p`
   vertical-align: middle;
   margin: 0 10px;
   z-index: 100;
-  &:hover{
+  &:hover {
     cursor: pointer;
   }
 `;
@@ -90,10 +95,10 @@ const Timestamp = styled.p`
 const Status = styled.p`
   display: block;
   margin-left: 10px;
-`
+`;
 const MediaImg = styled.img`
   width: 100%;
-  margin-left:auto;
+  margin-left: auto;
   border-radius: 10px;
   height: 400px;
 `;
@@ -102,5 +107,5 @@ const StyledDiv = styled.div`
   flex: auto;
   align-items: center;
   justify-content: space-evenly;
-`
+`;
 export default SmallTweet;
