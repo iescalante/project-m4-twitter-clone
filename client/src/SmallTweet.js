@@ -88,6 +88,7 @@ const Retweet = styled.p`
   display: block;
   width: 100%;
   color: grey;
+  margin-left: 50px;
 `;
 const RetweetFrom = styled.span`
   display: inline-block;

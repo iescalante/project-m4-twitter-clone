@@ -41,18 +41,18 @@ const BigTweetActions = ({
   };
   return (
     <Wrapper>
-      <TweetBtn>
+      <TweetBtn tabIndex="0">
         <FiMessageSquare />
       </TweetBtn>
-      <TweetBtn>
+      <TweetBtn tabIndex="0">
         <FiRepeat />
         <NumRetweets>{numRetweets}</NumRetweets>
       </TweetBtn>
-      <TweetBtn onClick={toggleLike}>
+      <TweetBtn tabIndex="0" onClick={toggleLike}>
         <FiHeart />
         <NumLikes>{numLikes}</NumLikes>
       </TweetBtn>
-      <TweetBtn>
+      <TweetBtn tabIndex="0">
         <FiUpload />
       </TweetBtn>
     </Wrapper>
