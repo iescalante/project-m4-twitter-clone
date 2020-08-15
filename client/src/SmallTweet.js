@@ -36,7 +36,10 @@ const SmallTweet = ({ tweet, toggleFetch, setToggleFetch }) => {
       <TopFlexedDiv>
         <Avatar src={tweet.author.avatarSrc} />
         <Text tabIndex="0" onClick={(e) => handleClickTweet(e, tweet.id)}>
-          <DisplayName onClick={(e) => handleClickName(e, tweet.author.handle)}>
+          <DisplayName
+            tabIndex="0"
+            onClick={(e) => handleClickName(e, tweet.author.handle)}
+          >
             {tweet.author.displayName}
           </DisplayName>
           <Handle>@{tweet.author.handle}</Handle>
@@ -65,7 +68,7 @@ const Wrapper = styled.div`
   align-items: flex-start;
   flex-wrap: wrap;
   padding: 10px 0;
-  border-bottom: 1px solid lightgrey;
+  border-bottom: 2px solid lightgrey;
 `;
 const TopFlexedDiv = styled.div`
   display: flex;
