@@ -67,10 +67,15 @@ const Profile = () => {
             <Banner src={otherProfile.profile.bannerSrc} />
             <UserInfo>
               <Avatar src={otherProfile.profile.avatarSrc} />
+              <FollowBtn>Follow</FollowBtn>
               <DisplayName>{otherProfile.profile.displayName}</DisplayName>
               <HandleName>@{otherProfile.profile.handle}</HandleName>
               <Bio>{otherProfile.profile.bio}</Bio>
-              <Location>{otherProfile.profile.location}</Location>
+              {otherProfile.profile.location ? (
+                <Location>{otherProfile.profile.location}</Location>
+              ) : (
+                <Location>N/AP</Location>
+              )}
               <DateJoined>
                 Joined{" "}
                 {format(new Date(otherProfile.profile.joined), "MMM yyyy")}
@@ -134,6 +139,19 @@ const Avatar = styled.img`
   width: 12%;
   border: 3px solid white;
 `;
+const FollowBtn = styled.button`
+  display: block;
+  float: right;
+  border-radius: 15px;
+  padding: 5px 20px;
+  font-size: 20px;
+  color: ${COLORS.primary};
+  &:hover {
+    cursor: pointer;
+    color: white;
+    background-color: ${COLORS.primary};
+  }
+`;
 const DisplayName = styled.h2`
   font-size: 20px;
 `;
@@ -169,7 +187,7 @@ const Option = styled.h2`
   color: grey;
   &:hover {
     color: ${COLORS.primary};
-    border-bottom: 3px solid ${COLORS.primary};
+    text-decoration: underline solid ${COLORS.primary};
     cursor: pointer;
   }
 `;
