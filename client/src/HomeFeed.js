@@ -78,7 +78,8 @@ const HomeFeed = () => {
   };
 
   const handleChange = (ev) => setStatus(ev.target.value);
-
+  const [charNum, setCharNum] = React.useState(280);
+  const handleCharNum = (ev) => setCharNum(charNum - ev.target.value.length);
   console.log("this is your homefeed", feedData);
 
   return (
@@ -89,12 +90,16 @@ const HomeFeed = () => {
           <Avatar src={avatarSrc} />
           <TextInput
             value={status}
-            onChange={(ev) => handleChange(ev)}
+            onChange={(ev) => {
+              handleChange(ev);
+              handleCharNum(ev);
+            }}
             name="status"
             placeholder="What's Happening?"
             type="text"
           />
         </AvInpDiv>
+        <CharNum length={charNum} />
         <MeowBtn type="submit">MEOW</MeowBtn>
       </TopHomeForm>
       <BottomHomeFeed>
@@ -145,6 +150,11 @@ const TextInput = styled.input`
   font-family: Arial, Helvetica, sans-serif;
   border: none;
   resize: none;
+`;
+const CharNum = styled.p`
+  float: right;
+  color: green;
+  font-size: 40px;
 `;
 const MeowBtn = styled.button`
   padding: 10px 40px;
