@@ -70,6 +70,10 @@ const HomeFeed = () => {
           100
         );
         setStatus("");
+      })
+      .catch((err) => {
+        console.log("this is your error", err);
+        return <Error />;
       });
   };
 

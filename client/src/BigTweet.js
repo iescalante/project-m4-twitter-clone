@@ -4,6 +4,7 @@ import format from "date-fns/format";
 import BigTweetActions from "./BigTweetActions";
 import { useHistory, useParams } from "react-router-dom";
 import { FiArrowLeft } from "react-icons/fi";
+import Error from "./Error";
 
 const BigTweet = ({ tweetId }) => {
   console.log(tweetId);
@@ -23,7 +24,10 @@ const BigTweet = ({ tweetId }) => {
       .then((data) => {
         setTweetInfo(data);
       })
-      .catch((err) => console.log("this is your error", err));
+      .catch((err) => {
+        console.log("this is your error", err);
+        return <Error />;
+      });
   }, [toggleFetch]);
 
   if (tweetInfo.tweet.media[0]) {

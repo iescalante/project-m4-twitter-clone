@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { FiMessageSquare, FiRepeat, FiHeart, FiUpload } from "react-icons/fi";
 import { useParams } from "react-router-dom";
+import Error from "./Error";
 
 const BigTweetActions = ({
   isLiked,
@@ -37,6 +38,10 @@ const BigTweetActions = ({
         console.log(data);
         console.log(isLiked);
         setToggleFetch(!toggleFetch);
+      })
+      .catch((err) => {
+        console.log("this is your error", err);
+        return <Error />;
       });
   };
   return (

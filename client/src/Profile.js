@@ -5,6 +5,7 @@ import format from "date-fns/format";
 import { COLORS } from "./constants";
 import { useParams } from "react-router-dom";
 import SmallTweet from "./SmallTweet";
+import Error from "./Error";
 
 const Profile = () => {
   // const {
@@ -44,7 +45,10 @@ const Profile = () => {
           setOtherProfile(data);
           setOtherProfileStatus("idle");
         })
-        .catch((err) => console.log("this is your error", err));
+        .catch((err) => {
+          console.log("this is your error", err);
+          return <Error />;
+        });
     }
   }, []);
   console.log(profileId, otherProfile);
@@ -55,6 +59,10 @@ const Profile = () => {
       .then((data) => {
         console.log(data);
         setProfileFeed(data);
+      })
+      .catch((err) => {
+        console.log("this is your error", err);
+        return <Error />;
       });
   }, []);
 

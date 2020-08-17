@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { FiMessageSquare, FiRepeat, FiHeart, FiUpload } from "react-icons/fi";
+import Error from "./Error";
+
 const SmallTweetActions = ({
   tweet,
   isLiked,
@@ -35,6 +37,10 @@ const SmallTweetActions = ({
         console.log(data);
         console.log(isLiked);
         setToggleFetch(!toggleFetch);
+      })
+      .catch((err) => {
+        console.log("this is your error", err);
+        return <Error />;
       });
   };
   return (
